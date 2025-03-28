@@ -1,4 +1,4 @@
-import { ApplicationConfig, inject, Injectable, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, inject, Injectable, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { STORAGE_ENGINE, StorageEngine, withNgxsStoragePlugin } from '@ngxs/storage-plugin';
@@ -6,6 +6,7 @@ import { provideStore } from '@ngxs/store';
 import { routes } from './app.routes';
 import { provideIndexedDb, DBConfig, NgxIndexedDBService } from 'ngx-indexed-db';
 import { firstValueFrom } from 'rxjs';
+import { NgxsStoreModule } from '../../store/store.module';
 
 
 const dbConfig: DBConfig  = {
@@ -51,6 +52,7 @@ export const appConfig: ApplicationConfig = {
       provide: STORAGE_ENGINE,
       useClass: MyStorageEngine
     },
-    provideIndexedDb(dbConfig)
+    provideIndexedDb(dbConfig),
+    importProvidersFrom(NgxsStoreModule)
   ],
 };

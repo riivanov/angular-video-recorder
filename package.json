@@ -17,6 +17,8 @@
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
+    "@ngxs/devtools-plugin": "^19.0.0",
+    "@ngxs/logger-plugin": "^19.0.0",
     "@ngxs/storage-plugin": "19.0.0",
     "@ngxs/store": "^19.0.0",
     "ngx-indexed-db": "^19.4.3",
