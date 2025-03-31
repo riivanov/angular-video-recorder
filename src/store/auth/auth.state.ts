@@ -19,8 +19,8 @@ export interface AuthenticationStateModel {
     lastName: '',
     fullName: '',
     email: '',
-    roles: []
-  }
+    roles: [],
+  },
 })
 @Injectable()
 export class AuthState {
@@ -38,10 +38,7 @@ export class AuthState {
   }
 
   @Action(SetAuthData)
-  setAuthData(
-    { setState }: StateContext<AuthenticationStateModel>,
-    { payload }: SetAuthData
-  ) {
+  setAuthData({ setState }: StateContext<AuthenticationStateModel>, { payload }: SetAuthData) {
     setState(AuthState.setInstanceState(payload));
   }
 }

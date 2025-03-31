@@ -39,4 +39,10 @@ export class UserState {
   setUser(ctx: StateContext<UserStateModel>, { payload }: SetUser) {
     ctx.setState(payload);
   }
+
+  @Action(SetUser)
+  async logSetUser(ctx: StateContext<UserStateModel>, action: SetUser) {
+    // console.log("set user")
+  }
+  
 }
