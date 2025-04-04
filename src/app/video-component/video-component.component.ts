@@ -36,29 +36,28 @@ export class VideoComponentComponent {
   }
 
   async ngOnInit() {
-    navigator.mediaDevices
-      .getUserMedia({
-        video: {
-          width: 360,
-        },
-      })
-      .then((stream) => {
-        this.videoElement = this.videoElementRef.nativeElement;
-        this.recordVideoElement = this.recordVideoElementRef.nativeElement;
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        width: 360,
+      },
+    });
+    this.videoElement = this.videoElementRef.nativeElement;
+    this.recordVideoElement = this.recordVideoElementRef.nativeElement;
 
-        this.stream = stream;
-        this.videoElement.srcObject = this.stream;
-      });
+    this.stream = stream;
+    this.videoElement.srcObject = this.stream;
   }
 
   startRecording() {
-    this.store.dispatch(new StartRecording({
-      name: "",
-      type: "video/webm",
-      size: 0,
-      isRecording: true,
-      raw: null
-    }))
+    this.store.dispatch(
+      new StartRecording({
+        name: '',
+        type: 'video/webm',
+        size: 0,
+        isRecording: true,
+        raw: null,
+      })
+    );
     this.recordedBlobs = [];
     let options: any = { mimeType: 'video/webm' };
 
@@ -107,13 +106,15 @@ export class VideoComponentComponent {
           type: 'video/webm',
         });
         this.downloadUrl = window.URL.createObjectURL(videoBuffer); // you can download with <a> tag
-        this.store.dispatch(new StopRecording({
-          isRecording: false,
-          name: "",
-          size: videoBuffer.size,
-          type: "video/webm",
-          raw: videoBuffer
-        }))
+        this.store.dispatch(
+          new StopRecording({
+            isRecording: false,
+            name: '',
+            size: videoBuffer.size,
+            type: 'video/webm',
+            raw: videoBuffer,
+          })
+        );
         this.recordVideoElement.src = this.downloadUrl;
       };
     } catch (error) {
