@@ -1,17 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { Subject } from 'rxjs';
+import { StartRecording, StopRecording } from '../../store/video/video.actions';
 
 @Component({
   selector: 'app-video-component',
   imports: [CommonModule],
   templateUrl: './video-component.component.html',
-  styleUrl: './video-component.component.scss'
+  styleUrl: './video-component.component.scss',
 })
 export class VideoComponentComponent {
-
   @ViewChild('recordedVideo') recordVideoElementRef: ElementRef;
   @ViewChild('video') videoElementRef: ElementRef;
 
+  private destroy$ = new Subject();
   videoElement: HTMLVideoElement;
   recordVideoElement: HTMLVideoElement;
   mediaRecorder: any;
@@ -20,16 +23,26 @@ export class VideoComponentComponent {
   downloadUrl: string;
   stream: MediaStream;
 
-  constructor() {}
+  constructor(private store: Store) {
+    // const actions$ = inject(Actions);
+    // actions$
+    //   .pipe(ofActionDispatched(SetUser), takeUntil(this.destroy$))
+    //   .subscribe((setUser) => console.log('set user'));
+    // this.store.dispatch(SetUser);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(null);
+  }
 
   async ngOnInit() {
     navigator.mediaDevices
       .getUserMedia({
         video: {
-          width: 360
-        }
+          width: 360,
+        },
       })
-      .then(stream => {
+      .then((stream) => {
         this.videoElement = this.videoElementRef.nativeElement;
         this.recordVideoElement = this.recordVideoElementRef.nativeElement;
 
@@ -39,6 +52,13 @@ export class VideoComponentComponent {
   }
 
   startRecording() {
+    this.store.dispatch(new StartRecording({
+      name: "",
+      type: "video/webm",
+      size: 0,
+      isRecording: true,
+      raw: null
+    }))
     this.recordedBlobs = [];
     let options: any = { mimeType: 'video/webm' };
 
@@ -84,14 +104,20 @@ export class VideoComponentComponent {
     try {
       this.mediaRecorder.onstop = (event: Event) => {
         const videoBuffer = new Blob(this.recordedBlobs, {
-          type: 'video/webm'
+          type: 'video/webm',
         });
         this.downloadUrl = window.URL.createObjectURL(videoBuffer); // you can download with <a> tag
+        this.store.dispatch(new StopRecording({
+          isRecording: false,
+          name: "",
+          size: videoBuffer.size,
+          type: "video/webm",
+          raw: videoBuffer
+        }))
         this.recordVideoElement.src = this.downloadUrl;
       };
     } catch (error) {
       console.log(error);
     }
   }
-
 }

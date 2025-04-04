@@ -1,11 +1,10 @@
-import { NgxsConfig } from '@ngxs/store';
 import { NgxsDevtoolsOptions } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginOptions } from '@ngxs/logger-plugin';
+import { NgxsConfig } from '@ngxs/store';
 
-import { AuthState } from './auth/auth.state';
-import { DashboardStates } from './dashboard';
+import { VideoState } from './video/video.state';
 
-export const STATES_MODULES = [AuthState, ...DashboardStates];
+export const STATES_MODULES = [VideoState];
 
 export const OPTIONS_CONFIG: Partial<NgxsConfig> = {
   /**
@@ -15,7 +14,7 @@ export const OPTIONS_CONFIG: Partial<NgxsConfig> = {
    * import { environment } from '@env';
    * developmentMode: !environment.production
    */
-  developmentMode: true
+  developmentMode: true,
 };
 
 export const DEVTOOLS_REDUX_CONFIG: NgxsDevtoolsOptions = {
@@ -25,7 +24,7 @@ export const DEVTOOLS_REDUX_CONFIG: NgxsDevtoolsOptions = {
    * import { environment } from '@env';
    * disabled: environment.production
    */
-  disabled: false
+  disabled: false,
 };
 
 export const LOGGER_CONFIG: NgxsLoggerPluginOptions = {
@@ -35,5 +34,5 @@ export const LOGGER_CONFIG: NgxsLoggerPluginOptions = {
    * import { environment } from '@env';
    * disabled: environment.production
    */
-  disabled: false
+  disabled: false,
 };
