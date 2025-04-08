@@ -3,6 +3,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
 import { StartRecording, StopRecording } from '../../store/video/video.actions';
+import { VideoState } from '../../store/video/video.state';
 
 @Component({
   selector: 'app-video-component',
@@ -46,6 +47,12 @@ export class VideoComponentComponent {
 
     this.stream = stream;
     this.videoElement.srcObject = this.stream;
+
+    const videoBuffer = this.store.selectSignal(VideoState.getRawBuffer);
+    const tmp = await videoBuffer();
+    const base64 = await (await fetch(tmp as unknown as string)).blob();
+    this.downloadUrl = window.URL.createObjectURL(base64); // you can download with <a> tag
+    this.recordVideoElement.src = this.downloadUrl;
   }
 
   startRecording() {

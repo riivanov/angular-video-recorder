@@ -1,6 +1,6 @@
 import { firstValueFrom } from 'rxjs';
 import { inject, Injectable } from "@angular/core";
-import { Action, State, StateContext } from "@ngxs/store";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { StartRecording, StopRecording } from "./video.actions";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 
@@ -24,6 +24,12 @@ export interface VideoStateModel {
 })
 @Injectable()
 export class VideoState {
+
+  @Selector()
+  static async getRawBuffer(model: Promise<VideoStateModel>) {
+    const tmp =  await model;
+    return tmp.raw;
+  }
   
   @Action(StartRecording)
   startRecording(ctx: StateContext<VideoStateModel>, { payload }: StartRecording) {
