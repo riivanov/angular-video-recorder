@@ -53,8 +53,9 @@ export class VideoState {
   }
 
   async blobToBase64(blob: Blob): Promise<any> {
-    return new Promise((resolve, _) => {
+    return new Promise((resolve, reject) => {
       const reader = new FileReader();
+      reader.onerror = reject;
       reader.onloadend = () => resolve(reader.result);
       reader.readAsDataURL(blob);
     });
