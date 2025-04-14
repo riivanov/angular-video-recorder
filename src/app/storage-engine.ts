@@ -6,7 +6,8 @@ import { get, set } from 'idb-keyval';
 export class MyStorageEngine implements StorageEngine {
   async getItem(key: string) {
     console.log('getItem', key);
-    return await get(key);
+    const tmp = await get(key);
+    return tmp;
   }
 
   async setItem(key: string, value: any) {

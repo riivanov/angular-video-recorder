@@ -48,9 +48,8 @@ export class VideoComponentComponent {
     this.stream = stream;
     this.videoElement.srcObject = this.stream;
 
-    const videoBuffer = this.store.selectSignal(VideoState.getRawBuffer);
-    const tmp = await videoBuffer();
-    const base64 = await (await fetch(tmp as unknown as string)).blob();
+    const videoBuffer = await this.store.selectSignal(VideoState.getRawBuffer)();
+    const base64 = await (await fetch(videoBuffer as unknown as string)).blob();
     this.downloadUrl = window.URL.createObjectURL(base64); // you can download with <a> tag
     this.recordVideoElement.src = this.downloadUrl;
   }

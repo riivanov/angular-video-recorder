@@ -1,3 +1,4 @@
+import { VideosState } from './../store/video/videos.state';
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
@@ -13,7 +14,7 @@ export const appConfig: ApplicationConfig = {
     provideStore(
       [],
       withNgxsStoragePlugin({
-        keys: [VideoState],
+        keys: [VideosState, VideoState],
         async deserialize(obj) {
           const unwrapped = await obj;
           if (!unwrapped) return
