@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { StartRecording, StopRecording } from './video.actions';
+import { AddVideo } from './videos.actions';
 
 export interface VideoStateModel {
+  index: number;
   name: string;
   size: number;
   type: 'video/webm';
@@ -13,6 +15,7 @@ export interface VideoStateModel {
 @State<VideoStateModel>({
   name: 'video',
   defaults: {
+    index: 0,
     name: '',
     type: 'video/webm',
     size: 0,
@@ -38,14 +41,16 @@ export class VideoState {
 
   @Action(StopRecording)
   async stopRecording(ctx: StateContext<VideoStateModel>, { payload }: StopRecording) {
-    ctx.setState({
+    const video = {
+      index: 0,
       isRecording: payload.isRecording,
       name: '',
       size: payload.size,
       type: 'video/webm',
       raw: await this.blobToBase64(payload.raw!),
-    });
-    // await firstValueFrom(this.#dbService.update("video", JSON.stringify(ctx.getState())))
+    } as VideoStateModel;
+    ctx.dispatch(new AddVideo(video))
+    ctx.setState(video);
   }
 
   async blobToBase64(blob: Blob): Promise<any> {

@@ -12,14 +12,14 @@ import { VideoState } from '../store/video/video.state';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideStore(
-      [],
+      [VideoState, VideosState],
       withNgxsStoragePlugin({
         keys: [VideosState, VideoState],
         async deserialize(obj) {
           const unwrapped = await obj;
           if (!unwrapped) return
           console.log("deserializing", unwrapped)
-          return JSON.parse(unwrapped)
+          return unwrapped
         },
       })
     ),

@@ -3,8 +3,9 @@ import { NgxsLoggerPluginOptions } from '@ngxs/logger-plugin';
 import { NgxsConfig } from '@ngxs/store';
 
 import { VideoState } from './video/video.state';
+import { VideosState } from './video/videos.state';
 
-export const STATES_MODULES = [VideoState];
+export const STATES_MODULES = [VideoState, VideosState];
 
 export const OPTIONS_CONFIG: Partial<NgxsConfig> = {
   /**

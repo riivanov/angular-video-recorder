@@ -24,13 +24,7 @@ export class VideoComponentComponent {
   downloadUrl: string;
   stream: MediaStream;
 
-  constructor(private store: Store) {
-    // const actions$ = inject(Actions);
-    // actions$
-    //   .pipe(ofActionDispatched(SetUser), takeUntil(this.destroy$))
-    //   .subscribe((setUser) => console.log('set user'));
-    // this.store.dispatch(SetUser);
-  }
+  constructor(private store: Store) {}
 
   ngOnDestroy() {
     this.destroy$.next(null);
@@ -55,15 +49,6 @@ export class VideoComponentComponent {
   }
 
   startRecording() {
-    this.store.dispatch(
-      new StartRecording({
-        name: '',
-        type: 'video/webm',
-        size: 0,
-        isRecording: true,
-        raw: null,
-      })
-    );
     this.recordedBlobs = [];
     let options: any = { mimeType: 'video/webm' };
 
@@ -74,6 +59,16 @@ export class VideoComponentComponent {
     }
 
     this.mediaRecorder.start(); // collect 100ms of data
+    this.store.dispatch(
+      new StartRecording({
+        index: 0,
+        name: '',
+        type: 'video/webm',
+        size: 0,
+        isRecording: true,
+        raw: null,
+      })
+    );
     this.isRecording = !this.isRecording;
     this.onDataAvailableEvent();
     this.onStopRecordingEvent();
@@ -114,6 +109,7 @@ export class VideoComponentComponent {
         this.downloadUrl = window.URL.createObjectURL(videoBuffer); // you can download with <a> tag
         this.store.dispatch(
           new StopRecording({
+            index: 0,
             isRecording: false,
             name: '',
             size: videoBuffer.size,
