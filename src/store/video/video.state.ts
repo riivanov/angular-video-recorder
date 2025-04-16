@@ -7,7 +7,7 @@ export interface VideoStateModel {
   index: number;
   name: string;
   size: number;
-  type: 'video/webm';
+  type?: 'video/webm';
   raw: Blob | null;
   isRecording: boolean;
 }
@@ -17,7 +17,6 @@ export interface VideoStateModel {
   defaults: {
     index: 0,
     name: '',
-    type: 'video/webm',
     size: 0,
     isRecording: false,
     raw: null,
@@ -49,7 +48,7 @@ export class VideoState {
       type: 'video/webm',
       raw: await this.blobToBase64(payload.raw!),
     } as VideoStateModel;
-    ctx.dispatch(new AddVideo(video))
+    // ctx.dispatch(new AddVideo(video))
     ctx.setState(video);
   }
 

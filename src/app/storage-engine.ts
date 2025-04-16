@@ -15,7 +15,7 @@ export class MyStorageEngine implements StorageEngine {
     if (value === `{"__zone_symbol__state":true}`){
       return;
     }
-    console.log('setItem', key, value);
+    // console.log('setItem', key, value);
     await set(key, value);
   }
 }

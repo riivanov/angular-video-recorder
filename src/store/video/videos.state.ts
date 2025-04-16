@@ -23,8 +23,8 @@ export class VideosState {
   @Action(AddVideo)
   async addVideo(ctx: StateContext<VideosStateModel>, {model}: AddVideo) {
     console.log("ADDVIDEO", model)
-    let state = ctx.getState();
-    if (state instanceof Promise) state = await state;
+    const state = await ctx.getState();
+    // if (state instanceof Promise) state = await state;
     const length = state?.videos?.length ?? 0;
 
     const newVideo = {
@@ -43,9 +43,10 @@ export class VideosState {
       return;
     }
 
-    ctx.setState({
+    const updated = {
       ...state,
       videos: [...state?.videos, newVideo]
-    })
+    }
+    ctx.setState(updated)
   }
 }

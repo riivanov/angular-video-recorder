@@ -4,6 +4,7 @@ import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
 import { StartRecording, StopRecording } from '../../store/video/video.actions';
 import { VideoState } from '../../store/video/video.state';
+import { AddVideo } from '../../store/video/videos.actions';
 
 @Component({
   selector: 'app-video-component',
@@ -101,22 +102,24 @@ export class VideoComponentComponent {
   }
 
   onStopRecordingEvent() {
+    console.log("onStopRecordingEvent")
     try {
       this.mediaRecorder.onstop = (event: Event) => {
         const videoBuffer = new Blob(this.recordedBlobs, {
           type: 'video/webm',
         });
         this.downloadUrl = window.URL.createObjectURL(videoBuffer); // you can download with <a> tag
-        this.store.dispatch(
-          new StopRecording({
+        const video = {
             index: 0,
             isRecording: false,
             name: '',
             size: videoBuffer.size,
-            type: 'video/webm',
             raw: videoBuffer,
-          })
+          }
+        this.store.dispatch(
+          new StopRecording(video)
         );
+        this.store.dispatch(new AddVideo(video))
         this.recordVideoElement.src = this.downloadUrl;
       };
     } catch (error) {
