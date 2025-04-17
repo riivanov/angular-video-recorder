@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { StartRecording, StopRecording } from './video.actions';
 import { AddVideo } from './videos.actions';
+import { Untils } from '../../app/utils';
 
 export interface VideoStateModel {
   index: number;
@@ -24,6 +25,8 @@ export interface VideoStateModel {
 })
 @Injectable()
 export class VideoState {
+  constructor(private utils: Untils) {}
+
   @Selector()
   static async getRawBuffer(model: Promise<VideoStateModel>) {
     return (await model)?.raw
@@ -46,18 +49,10 @@ export class VideoState {
       name: '',
       size: payload.size,
       type: 'video/webm',
-      raw: await this.blobToBase64(payload.raw!),
+      raw: await this.utils.blobToBase64(payload.raw!),
     } as VideoStateModel;
     // ctx.dispatch(new AddVideo(video))
     ctx.setState(video);
   }
 
-  async blobToBase64(blob: Blob): Promise<any> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onerror = reject;
-      reader.onloadend = () => resolve(reader.result);
-      reader.readAsDataURL(blob);
-    });
-  }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { VideoStateModel } from './video.state';
 import { AddVideo } from './videos.actions';
+import { Untils } from '../../app/utils';
 
 export interface VideosStateModel {
   videos: VideoStateModel[];
@@ -15,9 +16,18 @@ export interface VideosStateModel {
 })
 @Injectable()
 export class VideosState {
+  constructor(private utils: Untils) {}
+
   @Selector()
   static async videos(state: VideosStateModel) {
-    return state?.videos;
+    const tmp = await state;
+    return tmp?.videos;
+  }
+  @Selector()
+  static async videoBuffers(state: VideosStateModel) {
+    const tmp = await state;
+    const ary = tmp.videos.map(vid => vid.raw)
+    return ary;
   }
 
   @Action(AddVideo)
@@ -33,7 +43,7 @@ export class VideosState {
       name: model?.name,
       size: model?.size,
       type: model?.type,
-      raw: model?.raw
+      raw: await this.utils.blobToBase64(model?.raw!)
     } as VideoStateModel;
 
     if (!state) {

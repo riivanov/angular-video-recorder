@@ -1,4 +1,5 @@
 <div *ngFor="let video of videos$() | async">
-  "works"
+  <video #player controls [src]="video?.raw"></video>
+  <!-- "works" -->
 </div>
 <app-video-component></app-video-component>

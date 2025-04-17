@@ -9,6 +9,7 @@ import {
   OPTIONS_CONFIG,
   STATES_MODULES
 } from './store.config';
+import { Untils } from '../app/utils';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import {
     NgxsReduxDevtoolsPluginModule.forRoot(DEVTOOLS_REDUX_CONFIG),
     NgxsLoggerPluginModule.forRoot(LOGGER_CONFIG)
   ],
+  providers: [Untils],
   exports: [NgxsModule]
 })
 export class NgxsStoreModule {}
