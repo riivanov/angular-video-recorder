@@ -19,7 +19,7 @@ export class VideoComponentComponent {
   private destroy$ = new Subject();
   videoElement: HTMLVideoElement;
   recordVideoElement: HTMLVideoElement;
-  mediaRecorder: any;
+  mediaRecorder: MediaRecorder;
   recordedBlobs: Blob[];
   isRecording: boolean = false;
   downloadUrl: string;
@@ -43,10 +43,8 @@ export class VideoComponentComponent {
     this.stream = stream;
     this.videoElement.srcObject = this.stream;
 
-    const videoBuffer = await this.store.selectSignal(VideoState.getRawBuffer)();
-    const base64 = await (await fetch(videoBuffer as unknown as string)).blob();
-    this.downloadUrl = window.URL.createObjectURL(base64); // you can download with <a> tag
-    this.recordVideoElement.src = this.downloadUrl;
+    const videoBuffer = (await this.store.selectSignal(VideoState.getRawBuffer)()) as unknown as string;
+    this.recordVideoElement.src = videoBuffer;
   }
 
   startRecording() {
@@ -71,8 +69,8 @@ export class VideoComponentComponent {
       })
     );
     this.isRecording = !this.isRecording;
-    this.onDataAvailableEvent();
-    this.onStopRecordingEvent();
+    this.mediaRecorder.ondataavailable = this.onDataAvailableEvent.bind(this);
+    this.mediaRecorder.onstop = this.onStopRecordingEvent.bind(this);
   }
 
   stopRecording() {
@@ -81,49 +79,27 @@ export class VideoComponentComponent {
     console.log('Recorded Blobs: ', this.recordedBlobs);
   }
 
-  playRecording() {
-    if (!this.recordedBlobs || !this.recordedBlobs.length) {
-      console.log('cannot play.');
-      return;
-    }
-    this.recordVideoElement.play();
-  }
-
-  onDataAvailableEvent() {
-    try {
-      this.mediaRecorder.ondataavailable = (event: any) => {
-        if (event.data && event.data.size > 0) {
-          this.recordedBlobs.push(event.data);
-        }
-      };
-    } catch (error) {
-      console.log(error);
+  onDataAvailableEvent(event: BlobEvent) {
+    if (event.data && event.data.size > 0) {
+      this.recordedBlobs.push(event.data);
     }
   }
 
-  onStopRecordingEvent() {
-    console.log("onStopRecordingEvent")
-    try {
-      this.mediaRecorder.onstop = (event: Event) => {
-        const videoBuffer = new Blob(this.recordedBlobs, {
-          type: 'video/webm',
-        });
-        this.downloadUrl = window.URL.createObjectURL(videoBuffer); // you can download with <a> tag
-        const video = {
-            index: 0,
-            isRecording: false,
-            name: '',
-            size: videoBuffer.size,
-            raw: videoBuffer,
-          }
-        this.store.dispatch(
-          new StopRecording(video)
-        );
-        this.store.dispatch(new AddVideo(video))
-        this.recordVideoElement.src = this.downloadUrl;
-      };
-    } catch (error) {
-      console.log(error);
-    }
+  onStopRecordingEvent(event: Event) {
+    console.log('onStopRecordingEvent');
+    const videoBuffer = new Blob(this.recordedBlobs, {
+      type: 'video/webm',
+    });
+    this.downloadUrl = window.URL.createObjectURL(videoBuffer); // you can download with <a> tag
+    const video = {
+      index: 0,
+      isRecording: false,
+      name: '',
+      size: videoBuffer.size,
+      raw: videoBuffer,
+    };
+    this.store.dispatch(new StopRecording(video));
+    this.store.dispatch(new AddVideo(video));
+    this.recordVideoElement.src = this.downloadUrl;
   }
 }

@@ -23,12 +23,6 @@ export class VideosState {
     const tmp = await state;
     return tmp?.videos;
   }
-  @Selector()
-  static async videoBuffers(state: VideosStateModel) {
-    const tmp = await state;
-    const ary = tmp.videos.map(vid => vid.raw)
-    return ary;
-  }
 
   @Action(AddVideo)
   async addVideo(ctx: StateContext<VideosStateModel>, {model}: AddVideo) {
