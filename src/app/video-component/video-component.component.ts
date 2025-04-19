@@ -12,7 +12,7 @@ import { AddVideo } from '../../store/video/videos.actions';
   templateUrl: './video-component.component.html',
   styleUrl: './video-component.component.scss',
 })
-export class VideoComponentComponent {
+export class VideoComponent {
   @ViewChild('recordedVideo') recordVideoElementRef: ElementRef;
   @ViewChild('video') videoElementRef: ElementRef;
 
