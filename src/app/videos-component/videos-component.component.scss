@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  .video-container {
+    display: flex;
+    justify-content: flex-end;
+
+    .video {
+      display: flex;
+      width: 50%;
+    }
+  }
+}
