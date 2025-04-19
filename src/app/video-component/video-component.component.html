@@ -1,13 +1,6 @@
 <div class="video-container">
   <video class="video" #video autoplay controls></video>
-  <span class="m-1"></span>
-  <!-- <video
-    class="video"
-    style="width: 360 !important"
-    controls
-    #recordedVideo
-  ></video> -->
-  <br />
+  <app-video-controls></app-video-controls>
   <button
     class="btn btn-primary btn-lg"
     *ngIf="!isRecording"

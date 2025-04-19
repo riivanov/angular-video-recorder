@@ -5,10 +5,11 @@ import { Subject } from 'rxjs';
 import { StartRecording, StopRecording } from '../../store/video/video.actions';
 import { VideoState } from '../../store/video/video.state';
 import { AddVideo } from '../../store/video/videos.actions';
+import { VideoControlsComponent } from "../video-controls/video-controls.component";
 
 @Component({
   selector: 'app-video-component',
-  imports: [CommonModule],
+  imports: [CommonModule, VideoControlsComponent],
   templateUrl: './video-component.component.html',
   styleUrl: './video-component.component.scss',
 })
