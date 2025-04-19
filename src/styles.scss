@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+
+.html {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  // flex: 1 0 100%;
+
+  .body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  // flex: 1 0 100%;
+
+    .app-root {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+  // flex: 1 0 100%;
+    }
+  }
+}

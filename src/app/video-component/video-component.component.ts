@@ -13,12 +13,12 @@ import { AddVideo } from '../../store/video/videos.actions';
   styleUrl: './video-component.component.scss',
 })
 export class VideoComponent {
-  @ViewChild('recordedVideo') recordVideoElementRef: ElementRef;
+  // @ViewChild('recordedVideo') recordVideoElementRef: ElementRef;
   @ViewChild('video') videoElementRef: ElementRef;
 
   private destroy$ = new Subject();
   videoElement: HTMLVideoElement;
-  recordVideoElement: HTMLVideoElement;
+  // recordVideoElement: HTMLVideoElement;
   mediaRecorder: MediaRecorder;
   recordedBlobs: Blob[];
   isRecording: boolean = false;
@@ -38,13 +38,13 @@ export class VideoComponent {
       },
     });
     this.videoElement = this.videoElementRef.nativeElement;
-    this.recordVideoElement = this.recordVideoElementRef.nativeElement;
+    // this.recordVideoElement = this.recordVideoElementRef.nativeElement;
 
     this.stream = stream;
     this.videoElement.srcObject = this.stream;
 
-    const videoBuffer = (await this.store.selectSignal(VideoState.getRawBuffer)()) as unknown as string;
-    this.recordVideoElement.src = videoBuffer;
+    // const videoBuffer = (await this.store.selectSignal(VideoState.getRawBuffer)()) as unknown as string;
+    // this.recordVideoElement.src = videoBuffer;
   }
 
   startRecording() {
@@ -100,6 +100,6 @@ export class VideoComponent {
     };
     this.store.dispatch(new StopRecording(video));
     this.store.dispatch(new AddVideo(video));
-    this.recordVideoElement.src = this.downloadUrl;
+    // this.recordVideoElement.src = this.downloadUrl;
   }
 }

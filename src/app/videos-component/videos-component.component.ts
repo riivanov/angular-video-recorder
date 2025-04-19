@@ -6,7 +6,7 @@ import { VideoComponent } from '../video-component/video-component.component';
 
 @Component({
   selector: 'app-videos-component',
-  imports: [CommonModule, VideoComponent],
+  imports: [CommonModule],
   templateUrl: './videos-component.component.html',
   styleUrl: './videos-component.component.scss',
 })

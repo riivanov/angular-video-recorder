@@ -1,0 +1,14 @@
+:host {
+  display: flex;
+  flex: 1 0 70%;
+
+  .video-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 70%;
+
+    .video {
+      display: flex;
+    }
+  }
+}
