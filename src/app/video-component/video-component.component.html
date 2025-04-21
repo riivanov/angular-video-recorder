@@ -1,18 +1,10 @@
 <div class="video-container">
   <video class="video" #video autoplay controls></video>
-  <app-video-controls></app-video-controls>
-  <button
-    class="btn btn-primary btn-lg"
-    *ngIf="!isRecording"
-    (click)="startRecording()"
-  >
+  <!-- <app-video-controls></app-video-controls> -->
+  <button #record class="start-recording btn-primary btn-lg" *ngIf="!isRecording" (click)="startRecording()" [style.top.px]="top" [style.left.px]="left">
     Start Recording
   </button>
-  <button
-    class="btn btn-warning btn-lg"
-    *ngIf="isRecording"
-    (click)="stopRecording()"
-  >
+  <button class="stop-recording btn-warning btn-lg" *ngIf="isRecording" (click)="stopRecording()">
     Stop Recording
   </button>
 </div>

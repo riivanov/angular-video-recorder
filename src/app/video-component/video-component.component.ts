@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
 import { StartRecording, StopRecording } from '../../store/video/video.actions';
-import { VideoState } from '../../store/video/video.state';
 import { AddVideo } from '../../store/video/videos.actions';
-import { VideoControlsComponent } from "../video-controls/video-controls.component";
+import { VideoControlsComponent } from '../video-controls/video-controls.component';
 
 @Component({
   selector: 'app-video-component',
@@ -14,19 +13,35 @@ import { VideoControlsComponent } from "../video-controls/video-controls.compone
   styleUrl: './video-component.component.scss',
 })
 export class VideoComponent {
-  // @ViewChild('recordedVideo') recordVideoElementRef: ElementRef;
-  @ViewChild('video') videoElementRef: ElementRef;
+  @ViewChild('video') videoElementRef: ElementRef<HTMLVideoElement>;
+  @ViewChild('record') recordElementRef: ElementRef<HTMLButtonElement>;
 
   private destroy$ = new Subject();
   videoElement: HTMLVideoElement;
-  // recordVideoElement: HTMLVideoElement;
   mediaRecorder: MediaRecorder;
   recordedBlobs: Blob[];
   isRecording: boolean = false;
   downloadUrl: string;
   stream: MediaStream;
+  top: number;
+  left: number;
 
   constructor(private store: Store) {}
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    const width = this.videoElementRef?.nativeElement?.clientWidth;
+    const height = this.videoElementRef?.nativeElement?.clientHeight;
+    this.left = width / 2 - 0.05 * width;
+    this.top = height - 0.1 * height;
+  }
+
+  ngAfterViewInit() {
+    const width = this.videoElementRef?.nativeElement?.clientWidth;
+    const height = this.videoElementRef?.nativeElement?.clientHeight;
+    this.left = width / 2 - 0.05 * width;
+    this.top = height + 0.35 * height;
+  }
 
   ngOnDestroy() {
     this.destroy$.next(null);
@@ -39,13 +54,9 @@ export class VideoComponent {
       },
     });
     this.videoElement = this.videoElementRef.nativeElement;
-    // this.recordVideoElement = this.recordVideoElementRef.nativeElement;
 
     this.stream = stream;
     this.videoElement.srcObject = this.stream;
-
-    // const videoBuffer = (await this.store.selectSignal(VideoState.getRawBuffer)()) as unknown as string;
-    // this.recordVideoElement.src = videoBuffer;
   }
 
   startRecording() {
