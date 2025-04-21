@@ -5,6 +5,6 @@ export class AddVideo {
   constructor(readonly model: VideoStateModel) {}
 }
 export class RemoveVideo {
-  static readonly type = '[AddVideo] action';
+  static readonly type = '[RemoveVideo] action';
   constructor(readonly model: VideoStateModel) {}
 }

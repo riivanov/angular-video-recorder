@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Actions, Store } from '@ngxs/store';
 import { VideosState } from '../../store/video/videos.state';
-import { VideoComponent } from '../video-component/video-component.component';
+import { RemoveVideo } from '../../store/video/videos.actions';
+import { VideoStateModel } from '../../store/video/video.state';
 
 @Component({
   selector: 'app-videos-component',
@@ -13,4 +14,10 @@ import { VideoComponent } from '../video-component/video-component.component';
 export class VideosComponent {
   actions$ = inject(Actions);
   videos$ = inject(Store).selectSignal(VideosState.videos);
+
+  constructor(private readonly store: Store) {}
+  
+  removeVideo(video: VideoStateModel) {
+    this.store.dispatch(new RemoveVideo(video));
+  }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { VideoStateModel } from './video.state';
-import { AddVideo } from './videos.actions';
+import { AddVideo, RemoveVideo } from './videos.actions';
 import { Untils } from '../../app/utils';
 
 export interface VideosStateModel {
@@ -22,6 +22,18 @@ export class VideosState {
   static async videos(state: VideosStateModel) {
     const tmp = await state;
     return tmp?.videos;
+  }
+
+  @Action(RemoveVideo)
+  async removeVideo(ctx: StateContext<VideosStateModel>, {model}: RemoveVideo) {
+    const state = await ctx.getState();
+    ctx.setState({
+      ...state,
+      videos: [
+        ...state?.videos?.slice(0, model?.index),
+        ...state?.videos?.slice(model?.index + 1)
+      ]
+    })
   }
 
   @Action(AddVideo)
