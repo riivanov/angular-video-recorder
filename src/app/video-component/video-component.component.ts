@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { Subject } from 'rxjs';
+import { interval, Subject } from 'rxjs';
 import { StartRecording, StopRecording } from '../../store/video/video.actions';
 import { AddVideo } from '../../store/video/videos.actions';
 
@@ -16,6 +16,7 @@ export class VideoComponent {
   @ViewChild('record') recordElementRef: ElementRef<HTMLButtonElement>;
 
   private destroy$ = new Subject();
+  maxRecordedLength$ = interval(10000);
   videoElement: HTMLVideoElement;
   mediaRecorder: MediaRecorder;
   recordedBlobs: Blob[];
@@ -25,7 +26,13 @@ export class VideoComponent {
   top: number;
   left: number;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) {
+    this.maxRecordedLength$.subscribe((event) => {
+      if (this.isRecording) {
+        this.stopRecording();
+      }
+    });
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
