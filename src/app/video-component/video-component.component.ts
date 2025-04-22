@@ -32,14 +32,14 @@ export class VideoComponent {
     const width = this.videoElementRef?.nativeElement?.clientWidth;
     const height = this.videoElementRef?.nativeElement?.clientHeight;
     this.left = width / 2 - 0.05 * width;
-    this.top = height - 0.1 * height;
+    this.top = height - 0.1 * height - 20;
   }
 
   ngAfterViewInit() {
     const width = this.videoElementRef?.nativeElement?.clientWidth;
     const height = this.videoElementRef?.nativeElement?.clientHeight;
     this.left = width / 2 - 0.05 * width;
-    this.top = height + 0.35 * height;
+    this.top = height + 0.35 * height - 20;
   }
 
   ngOnDestroy() {
