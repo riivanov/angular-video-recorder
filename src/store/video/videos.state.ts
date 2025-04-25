@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Untils } from '../../app/utils';
 import { VideoStateModel } from './video.state';
 import { AddVideo, RemoveVideo } from './videos.actions';
-import { Untils } from '../../app/utils';
 
 export interface VideosStateModel {
   videos: VideoStateModel[];
@@ -25,20 +25,17 @@ export class VideosState {
   }
 
   @Action(RemoveVideo)
-  async removeVideo(ctx: StateContext<VideosStateModel>, {model}: RemoveVideo) {
+  async removeVideo(ctx: StateContext<VideosStateModel>, { model }: RemoveVideo) {
     const state = await ctx.getState();
     ctx.setState({
       ...state,
-      videos: [
-        ...state?.videos?.slice(0, model?.index),
-        ...state?.videos?.slice(model?.index + 1)
-      ]
-    })
+      videos: [...state?.videos?.filter((vid) => vid.index !== model.index)],
+    });
   }
 
   @Action(AddVideo)
-  async addVideo(ctx: StateContext<VideosStateModel>, {model}: AddVideo) {
-    console.log("ADDVIDEO", model)
+  async addVideo(ctx: StateContext<VideosStateModel>, { model }: AddVideo) {
+    console.log('ADDVIDEO', model);
     const state = await ctx.getState();
     // if (state instanceof Promise) state = await state;
     const length = state?.videos?.length ?? 0;
@@ -49,7 +46,7 @@ export class VideosState {
       name: model?.name,
       size: model?.size,
       type: model?.type,
-      raw: await this.utils.blobToBase64(model?.raw!)
+      raw: await this.utils.blobToBase64(model?.raw!),
     } as VideoStateModel;
 
     if (!state) {
@@ -61,8 +58,8 @@ export class VideosState {
 
     const updated = {
       ...state,
-      videos: [...state?.videos, newVideo]
-    }
-    ctx.setState(updated)
+      videos: [...state?.videos, newVideo],
+    };
+    ctx.setState(updated);
   }
 }
