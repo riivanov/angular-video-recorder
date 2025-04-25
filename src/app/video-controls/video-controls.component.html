@@ -1,12 +1,11 @@
-{{ isRecording }}
-<!-- @if (!isRecording) { -->
-<!-- <button #record class="start-recording btn-primary btn-lg" [style.top.px]="top" [style.left.px]="left">
+<!-- @if (!isRecording) {
+<button #record class="start-recording btn-primary btn-lg" [style.top.px]="top" [style.left.px]="left">
   <svg class="record-svg" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle (click)="startRecording()" class="record-circle" cx="30" cy="30" r="30" fill="white" />
     <circle (click)="startRecording()" class="record-circle" cx="30" cy="30" r="14" fill="#FF0000" />
   </svg>
-</button> -->
-<!-- } @if(isRecording) { -->
+</button>
+} @if(isRecording) { -->
 
 <button
   #btnStop
@@ -26,10 +25,10 @@
     <circle class="circle" cx="30.25" cy="30" r="28.5" fill="white" stroke="#5061D0" stroke-width="3" />
     <rect class="rect" x="19.25" y="19" width="22" height="22" rx="4" fill="#5061D0" />
   </svg>
-  <div  class="progress-bar">
-    <div 
-    *ngFor="let sec of precentRecorded$ | async"
-    class="percent" [style.width.px]="10" [style.height.px]="14"></div>
+  <div class="progress-bar">
+    @for (sec of precentRecorded$ | async; track $index) {
+    <div class="percent" [style.width.px]="10" [style.height.px]="14"></div>
+    }
   </div>
-</button>
+  <p class="elapsed">{{ ((precentRecorded$ | async))?.length! + 1  }}s </p>
 <!-- } -->

@@ -34,6 +34,7 @@
 
     .stop-recording-svg {
       display: flex;
+      cursor: pointer;
 
       .circle {
         display: flex;
@@ -46,14 +47,20 @@
     .progress-bar {
       display: flex;
       align-items: center;
-      // justify-content: center;
-      // background-color: red;
       flex: 1 1 50%;
 
       .percent {
         display: flex;
         background-color: #5061D0;
       }
+    }
+    .elapsed {
+      display: flex;
+      color: white;
+      margin: 0;
+      border: 0;
+      align-items: center;
+      font-weight: bold;
     }
   }
 }

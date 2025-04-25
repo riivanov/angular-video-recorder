@@ -1,10 +1,10 @@
-import { CommonModule, NgFor, NgForOf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { interval, map, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-video-controls',
-  imports: [CommonModule, NgFor, NgForOf],
+  imports: [CommonModule],
   templateUrl: './video-controls.component.html',
   styleUrl: './video-controls.component.scss',
 })
@@ -21,7 +21,10 @@ export class VideoControlsComponent {
   onStartRecording = new EventEmitter<void>();
   @Output()
   onStoptRecording = new EventEmitter<void>();
-  precentRecorded$ = interval(1000).pipe(map(num => new Array(num)), takeUntil(interval(11000)));
+  precentRecorded$ = interval(1000).pipe(
+    map((num) => new Array(num)),
+    takeUntil(interval(11000))
+  );
 
   startRecording() {
     this.onStartRecording.emit();
