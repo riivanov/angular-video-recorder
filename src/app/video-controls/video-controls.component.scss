@@ -24,14 +24,34 @@
   }
   .stop-recording {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    flex: 1 0 100%;
+    // flex-direction: column;
+    // justify-content: flex-end;
+    // align-items: center;
     position: absolute;
     width: 160px;
     height: 40px;
     border-radius: 100px;
     background-color: #000000;
     opacity: 60%;
+
+    .stop-recording-svg {
+      display: flex;
+      // flex: 1 0 50%;
+
+      .circle {
+        display: flex;
+      }
+      .rect {
+        display: flex;
+      }
+    }
+
+    .progress-bar {
+      display: flex;
+      // position: absolute;
+      background-color: red;
+      flex: 1 1 50%;
+    }
   }
 }

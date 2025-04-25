@@ -1,14 +1,26 @@
 {{ isRecording }}
-@if (!isRecording) {
-<button #record class="start-recording btn-primary btn-lg" [style.top.px]="top" [style.left.px]="left">
+<!-- @if (!isRecording) { -->
+<!-- <button #record class="start-recording btn-primary btn-lg" [style.top.px]="top" [style.left.px]="left">
   <svg class="record-svg" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle (click)="startRecording()" class="record-circle" cx="30" cy="30" r="30" fill="white" />
     <circle (click)="startRecording()" class="record-circle" cx="30" cy="30" r="14" fill="#FF0000" />
   </svg>
-</button>
-} @if(isRecording) {
+</button> -->
+<!-- } @if(isRecording) { -->
 
-<button class="stop-recording btn-warning btn-lg" (click)="stopRecording()" [style.top.px]="top" [style.left.px]="left">
-  Stop Recording
+<button
+  #btnStop
+  class="stop-recording btn-warning btn-lg"
+  (click)="stopRecording()"
+  [style.top.px]="top"
+  [style.left.px]="left"
+>
+  <svg class="stop-recording-svg" width="40" height="40" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle class="circle" cx="30.25" cy="30" r="28.5" fill="white" stroke="#5061D0" stroke-width="3" />
+    <rect class="rect" x="19.25" y="19" width="22" height="22" rx="4" fill="#5061D0" />
+  </svg>
+  <div
+    class="progress-bar"
+  ></div>
 </button>
-}
+<!-- } -->
