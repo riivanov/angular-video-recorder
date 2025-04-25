@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { interval, Subject } from 'rxjs';
 import { StartRecording, StopRecording } from '../../store/video/video.actions';
 import { AddVideo } from '../../store/video/videos.actions';
+import { VideoControlsComponent } from '../video-controls/video-controls.component';
 
 @Component({
   selector: 'app-video-component',
-  imports: [CommonModule],
+  imports: [CommonModule, VideoControlsComponent],
   templateUrl: './video-component.component.html',
   styleUrl: './video-component.component.scss',
 })
@@ -23,30 +24,13 @@ export class VideoComponent {
   isRecording: boolean = false;
   downloadUrl: string;
   stream: MediaStream;
-  top: number;
-  left: number;
 
   constructor(private store: Store) {
-    this.maxRecordedLength$.subscribe((event) => {
-      if (this.isRecording) {
-        this.stopRecording();
-      }
-    });
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    const width = this.videoElementRef?.nativeElement?.clientWidth;
-    const height = this.videoElementRef?.nativeElement?.clientHeight;
-    this.left = width / 2 - 0.05 * width;
-    this.top = height - 0.1 * height - 20;
-  }
-
-  ngAfterViewInit() {
-    const width = this.videoElementRef?.nativeElement?.clientWidth;
-    const height = this.videoElementRef?.nativeElement?.clientHeight;
-    this.left = width / 2 - 0.05 * width;
-    this.top = height + 0.35 * height - 20;
+    // this.maxRecordedLength$.subscribe((event) => {
+    //   if (this.isRecording) {
+    //     this.stopRecording();
+    //   }
+    // });
   }
 
   ngOnDestroy() {

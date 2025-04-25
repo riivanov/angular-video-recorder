@@ -14,28 +14,4 @@
     }
   }
 
-  .start-recording {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    width: 160px;
-    height: 40px;
-    border-radius: 100px;
-    background-color: #000000;
-    opacity: 60%;
-
-    .record-svg {
-      width: 75%;
-      height: 75%;
-
-      .record-circle {
-        cursor: pointer;
-      }
-    }
-  }
-  .stop-recording {
-    position: absolute;
-  }
 }

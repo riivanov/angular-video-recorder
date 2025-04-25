@@ -1,21 +1,10 @@
 <div class="video-container">
   <video class="video" #video autoplay controls></video>
-  <!-- <app-video-controls></app-video-controls> -->
-  @if (!isRecording) {
-  <button #record class="start-recording btn-primary btn-lg" [style.top.px]="top" [style.left.px]="left">
-    <svg class="record-svg" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle (click)="startRecording()" class="record-circle" cx="30" cy="30" r="30" fill="white" />
-      <circle (click)="startRecording()" class="record-circle" cx="30" cy="30" r="14" fill="#FF0000" />
-    </svg>
-  </button>
-  }
-  <button
-    class="stop-recording btn-warning btn-lg"
-    *ngIf="isRecording"
-    (click)="stopRecording()"
-    [style.top.px]="top"
-    [style.left.px]="left"
-  >
-    Stop Recording
-  </button>
+  <app-video-controls
+    [width]="video.clientWidth"
+    [height]="video.clientHeight"
+    [isRecording]="isRecording"
+    (onStartRecording)="startRecording()"
+    (onStoptRecording)="stopRecording()"
+  ></app-video-controls>
 </div>
