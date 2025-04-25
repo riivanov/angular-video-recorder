@@ -25,9 +25,6 @@
   .stop-recording {
     display: flex;
     flex: 1 0 100%;
-    // flex-direction: column;
-    // justify-content: flex-end;
-    // align-items: center;
     position: absolute;
     width: 160px;
     height: 40px;
@@ -37,7 +34,6 @@
 
     .stop-recording-svg {
       display: flex;
-      // flex: 1 0 50%;
 
       .circle {
         display: flex;
@@ -49,9 +45,15 @@
 
     .progress-bar {
       display: flex;
-      // position: absolute;
-      background-color: red;
+      align-items: center;
+      // justify-content: center;
+      // background-color: red;
       flex: 1 1 50%;
+
+      .percent {
+        display: flex;
+        background-color: #5061D0;
+      }
     }
   }
 }

@@ -1,11 +1,12 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, HostListener, input, Input, Output } from '@angular/core';
+import { CommonModule, NgFor, NgForOf } from '@angular/common';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { interval, map, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-video-controls',
-  imports: [CommonModule],
+  imports: [CommonModule, NgFor, NgForOf],
   templateUrl: './video-controls.component.html',
-  styleUrl: './video-controls.component.scss'
+  styleUrl: './video-controls.component.scss',
 })
 export class VideoControlsComponent {
   top: number;
@@ -15,30 +16,27 @@ export class VideoControlsComponent {
   @Input()
   height: number;
   @Input()
-  isRecording: boolean
+  isRecording: boolean;
   @Output()
   onStartRecording = new EventEmitter<void>();
   @Output()
   onStoptRecording = new EventEmitter<void>();
+  precentRecorded$ = interval(1000).pipe(map(num => new Array(num)), takeUntil(interval(11000)));
 
   startRecording() {
-    this.onStartRecording.emit()
+    this.onStartRecording.emit();
   }
   stopRecording() {
-    this.onStoptRecording.emit()
+    this.onStoptRecording.emit();
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
-    // const width = this.videoElementRef?.nativeElement?.clientWidth;
-    // const height = this.videoElementRef?.nativeElement?.clientHeight;
     this.left = this.width / 2 - 0.05 * this.width;
     this.top = this.height - 0.1 * this.height - 20;
   }
 
   ngAfterViewInit() {
-    // const width = this.videoElementRef?.nativeElement?.clientWidth;
-    // const height = this.videoElementRef?.nativeElement?.clientHeight;
     this.left = this.width / 2 - 0.05 * this.width;
     this.top = this.height + 0.35 * this.height - 20;
   }

@@ -15,12 +15,21 @@
   [style.top.px]="top"
   [style.left.px]="left"
 >
-  <svg class="stop-recording-svg" width="40" height="40" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    class="stop-recording-svg"
+    width="40"
+    height="40"
+    viewBox="0 0 70 70"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <circle class="circle" cx="30.25" cy="30" r="28.5" fill="white" stroke="#5061D0" stroke-width="3" />
     <rect class="rect" x="19.25" y="19" width="22" height="22" rx="4" fill="#5061D0" />
   </svg>
-  <div
-    class="progress-bar"
-  ></div>
+  <div  class="progress-bar">
+    <div 
+    *ngFor="let sec of precentRecorded$ | async"
+    class="percent" [style.width.px]="10" [style.height.px]="14"></div>
+  </div>
 </button>
 <!-- } -->
