@@ -6,7 +6,9 @@
     <circle (click)="startRecording()" class="record-circle" cx="30" cy="30" r="14" fill="#FF0000" />
   </svg>
 </button>
-} 
-<button  class="stop-recording btn-warning btn-lg" (click)="stopRecording()" [style.top.px]="top" [style.left.px]="left">
+} @if(isRecording) {
+
+<button class="stop-recording btn-warning btn-lg" (click)="stopRecording()" [style.top.px]="top" [style.left.px]="left">
   Stop Recording
 </button>
+}
