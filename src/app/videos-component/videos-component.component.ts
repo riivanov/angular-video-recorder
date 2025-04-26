@@ -28,4 +28,8 @@ export class VideosComponent {
       this.store.dispatch(new RemoveVideo(video));
     }
   }
+
+  changeOpacity(el: HTMLDivElement, percent: number) {
+    el.style.opacity = `${percent}%`
+  }
 }
