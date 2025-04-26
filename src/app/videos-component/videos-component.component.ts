@@ -35,6 +35,8 @@ export class VideosComponent {
   }
 
   showPlayVideoDialog(video: VideoStateModel) {
-    this.dialog.open(PlayVideoDialogComponent)
+    const ref = this.dialog.open(PlayVideoDialogComponent)
+    const instance = ref.componentInstance;
+    instance.video = video
   }
 }

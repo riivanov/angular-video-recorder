@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { VideoStateModel } from '../../store/video/video.state';
 
 @Component({
   selector: 'app-play-video-dialog',
@@ -7,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './play-video-dialog.component.scss'
 })
 export class PlayVideoDialogComponent {
+  @Input() video: VideoStateModel
 
 }
