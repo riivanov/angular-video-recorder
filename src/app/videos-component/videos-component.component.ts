@@ -7,6 +7,7 @@ import { VideoStateModel } from '../../store/video/video.state';
 import { RemoveVideo } from '../../store/video/videos.actions';
 import { VideosState } from '../../store/video/videos.state';
 import { DeleteVideoDialogComponent } from '../delete-video-dialog/delete-video-dialog.component';
+import { PlayVideoDialogComponent } from '../play-video-dialog/play-video-dialog.component';
 
 @Component({
   selector: 'app-videos-component',
@@ -31,5 +32,9 @@ export class VideosComponent {
 
   changeOpacity(el: HTMLDivElement, percent: number) {
     el.style.opacity = `${percent}%`
+  }
+
+  showPlayVideoDialog(video: VideoStateModel) {
+    this.dialog.open(PlayVideoDialogComponent)
   }
 }

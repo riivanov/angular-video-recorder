@@ -1,6 +1,12 @@
 @for (video of videos$() | async; track $index) {
 <div class="video-container">
-  <div #mouseover class="mouseover-div" (mouseover)="changeOpacity(mouseover, 50)" (mouseleave)="changeOpacity(mouseover, 100)">
+  <div
+    #mouseover
+    class="mouseover-div"
+    (click)="showPlayVideoDialog(video)"
+    (mouseover)="changeOpacity(mouseover, 50)"
+    (mouseleave)="changeOpacity(mouseover, 100)"
+  >
     <video class="video" #player [src]="video?.raw"></video>
     <svg
       class="trash-can-icon"
