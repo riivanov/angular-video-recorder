@@ -5,6 +5,7 @@ import { Actions, Store } from '@ngxs/store';
 import { VideoStateModel } from '../../store/video/video.state';
 import { VideosState } from '../../store/video/videos.state';
 import { DeleteVideoDialogComponent } from '../delete-video-dialog/delete-video-dialog.component';
+import { RemoveVideo } from '../../store/video/videos.actions';
 
 @Component({
   selector: 'app-videos-component',
@@ -20,7 +21,11 @@ export class VideosComponent {
   constructor(private readonly store: Store) {}
 
   removeVideo(video: VideoStateModel) {
-    this.dialog.open(DeleteVideoDialogComponent);
-    // this.store.dispatch(new RemoveVideo(video));
+    const dialogRef = this.dialog.open(DeleteVideoDialogComponent);
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.store.dispatch(new RemoveVideo(video));
+      }
+    });
   }
 }

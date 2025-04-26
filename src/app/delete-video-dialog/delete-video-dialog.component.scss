@@ -2,12 +2,22 @@
   display: flex;
   flex-direction: column;
 
+  .cancel {
+    color: #5061D0;
+  }
+
+  .delete {
+    background-color: #E53F28;
+    color: white;
+  }
+
   .cancel-x-container {
     display: flex;
     justify-content: flex-end;
 
     .cancel-x {
       padding: 10px;
+      cursor: pointer;
     }
   }
 
